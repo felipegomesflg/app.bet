@@ -1,15 +1,19 @@
 import React from "react";
 import { Sparklines, SparklinesLine } from "react-sparklines";
+import loading from "../assets/loading.gif";
 
 function AtivoReview(props) {
   return (
-    <div className="app-ativo-review col-sm-3">
+    <div className={`app-ativo-review col-sm-3 ${props.loading?'loading':''}`}>
       <div className="content">
+        <div className="loading">
+          <img src={loading}></img>
+        </div>
         <div className="p-header" alt={props.title}>
           <span className="material-icons ">assignment</span> {props.cod}
           <span className="value"></span>
         </div>
-        <div className="p-content">
+        <div className="p-body">
           <Sparklines data={props.data}>
             <SparklinesLine color="white" />
           </Sparklines>

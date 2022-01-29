@@ -3,15 +3,17 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Search from "../components/Search";
 import AuthService from "../services/auth.service";
+import authService from "../services/auth.service";
+import noUser from '../assets/no-user.png';
+
 
 const MainNavigation = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const location = useLocation();
-  console.log(location.pathname);
+  
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-    console.log(user);
     if (user) {
       setCurrentUser(user);
     }
@@ -34,51 +36,65 @@ const MainNavigation = () => {
                       <span
                         style={{
                           backgroundImage:
-                            'url("https://www.pngarts.com/files/6/User-Avatar-in-Suit-PNG.png")',
+                            `url(${currentUser.avatar})`
                         }}
                       ></span>
-                      <Link className="" to="/login">
-                        <p>Meu perfil</p>
+                      <Link className="" to="/my-account">
+                        <p >{currentUser.first_name} {currentUser.last_name}</p>
                       </Link>
                     </div>
                     <div>
-                      <Link className="red" to="/login">
+                      <Link
+                        className="red"
+                        to="/"
+                        onClick={() => authService.logout()}
+                      >
                         <span className="material-icons ">logout</span>
                       </Link>
                     </div>
                   </div>
                 ) : (
-                  <Link className="sidenav-link user-avatar" to="/login">
-                    <span
-                      style={{
-                        backgroundImage:
-                          'url("http://polosolucoes.com.br/wp-content/uploads/2020/06/avatar.png")',
-                      }}
-                    ></span>
-                    <p>Iniciar Sessão</p>
-                  </Link>
+                  <div className="user-avatar">
+                    <div className="avatar-content">
+                      <span
+                        style={{
+                          backgroundImage:
+                            `url(${noUser})`,
+                        }}
+                      ></span>
+                      <Link className="" to="/login">
+                        <p>Iniciar Sessão</p>
+                      </Link>
+                    </div>
+                  </div>
                 )}
               </div>
               <div className="sidenav-item">
                 <Link className="sidenav-link" to="/home">
+                  <span className="material-icons ">dashboard</span>
+                  Página inicial
+                </Link>
+              </div>
+              <div className="sidenav-item">
+                <Link className="sidenav-link" to="/bets">
                   <span className="material-icons ">event_note</span>
                   Apostas
                 </Link>
               </div>
               <div className="sidenav-item">
-                <Link className="sidenav-link" to="/home">
+                <Link className="sidenav-link" to="/articles">
                   <span className="material-icons ">trending_up</span>
                   Artigos
                 </Link>
               </div>
               <div className="sidenav-item">
-                <Link className="sidenav-link" to="/home">
+                <Link className="sidenav-link" to="/tickers">
                   <span className="material-icons ">format_list_bulleted</span>
                   Ativos
                 </Link>
               </div>
               <div className="sidenav-item">
-                <Link className="sidenav-link" to="/home">
+                <Link className="sidenav-link" to="/help">
                   <span className="material-icons ">help</span>
                   Ajuda
                 </Link>

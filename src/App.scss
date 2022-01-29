@@ -1,6 +1,7 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700);
 body {
   background-image: linear-gradient(120deg, #d5dfe9 0%, #acb9c7 100%);
-  font-family: roboto, sans-serif !important;
+  font-family: Montserrat, sans-serif !important;
 }
 
 .App {
@@ -18,6 +19,11 @@ body {
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     padding: 0;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
   }
 }
 
@@ -30,7 +36,7 @@ body {
 .sidenav {
   transition-duration: 0.2s;
   transition-property: margin-left, margin-right, width;
-  width: 70px;
+  width: 100px;
   min-height: calc(100vh - 40px);
   height: 100%;
   position: absolute;
@@ -51,16 +57,17 @@ body {
 
   .sidenav-inner {
     .sidenav-item {
-      width: 200px;
+      width: 250px;
+      margin-top: 15px;
 
       .sidenav-link {
-        padding: 12px 10px 12px 70px;
+        padding: 12px 10px 12px 100px;
         display: flex;
         color: #bfc7dc;
         text-decoration: none;
         span {
-          margin-left: -50px;
-          margin-right: 30px;
+          margin-left: -60px;
+          margin-right: 40px;
         }
         &:hover {
           background: #2e3b5a !important;
@@ -69,6 +76,7 @@ body {
       }
       .user-avatar {
         margin-bottom: 30px;
+        padding-bottom:15px;
         background-image: linear-gradient(
           0deg,
           rgba(0, 0, 0, 0.2) 0%,
@@ -79,14 +87,14 @@ body {
 
         .avatar-content {
           span {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             padding: 1px;
             background: #fff;
             border-radius: 50%;
             background-size: cover;
             display: inline-block;
-            margin: 5px 10px;
+            margin: 5px 20px;
             border: 2px solid #5a8dee;
             -webkit-transition: all 0.5s ease-in-out;
             -moz-transition: all 0.5s ease-in-out;
@@ -95,21 +103,28 @@ body {
             transition: all 0.5s ease-in-out;
           }
           p {
-            margin: 5px;
-            width: 60px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            width: 100px;
+            height: 60px;
             text-align: center;
+            font-weight: bold;
           }
         }
         .red {
           font-size: 1rem;
-          width: 36px;
-          height: 36px;
+          width: 35px;
+          height: 35px;
           border-radius: 30px;
           color: #ffffff;
           display: inline-block;
           text-align: center;
           padding: 5px;
-          margin: 5px 16px 10px;
+          margin: 5px 32px 10px;
           text-decoration: none;
           background-image: linear-gradient(120deg, #ff3434 0%, #a50000 100%);
           -webkit-transition: all 0.5s ease-in-out;
@@ -122,7 +137,7 @@ body {
     }
   }
   &:hover {
-    width: 200px;
+    width: 250px;
     .user-avatar {
       text-align: center;
       .avatar-content span {
@@ -136,12 +151,65 @@ body {
   }
 }
 .layout-container {
-  margin-left: 70px;
+  margin-left: 100px;
   padding: 30px;
 }
 section {
   margin-bottom: 50px;
 }
+
+/*############################ AUTH - LOGIN #######################*/
+.input {
+  border-radius: 5px;
+  border: 1px solid #acb9c7;
+  padding: 5px;
+}
+.auth,
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url("assets/pattern.jpg");
+  background-size: 10%;
+  .overlay {
+    background-image: linear-gradient(
+      0deg,
+      rgba(9, 14, 34, 0.9) 0%,
+      rgba(9, 14, 34, 1) 100%
+    );
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    > div {
+      width: 400px;
+      background-color: #fff;
+      padding: 30px 50px;
+      border-radius: 30px;
+      img.logo {
+        height: 50px;
+      }
+      h5 {
+        margin: 20px auto;
+        font-size: 25px;
+        font-weight: bold;
+      }
+      button {
+        margin-top: 10px;
+      }
+      p {
+        margin: 30px auto;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 /*############################ SEARCH #######################*/
 header {
   .app-search {
@@ -160,48 +228,77 @@ header {
   width: calc(100% - 70px);
   margin-left: 70px;
 }
-
+section > .title {
+  margin: 30px 0 20px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 /*############################ REVIEW #######################*/
-.reviews .title {
-  margin: 30px 0 15px;
+.app-ativo-bet,
+.app-ativo-review {
+  .loading {
+    display: none;
+  }
+  &.loading {
+    .content {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      img {
+        width: 30px;
+      }
+    }
+    .loading {
+      display: block;
+    }
+    .p-header,
+    .p-body,
+    .p-footer {
+      display: none;
+    }
+  }
 }
 .app-ativo-review {
   padding: 0 10px;
+
   &:nth-last-of-type(1) .content {
     .p-header {
-      color: #e66b6b;
+      color: #ef5350;
     }
-    .p-content,
+    .p-body,
     .p-footer button {
-      background-color: #e66b6b;
+      background-color: #ef5350;
     }
   }
   &:nth-last-of-type(2) .content {
     .p-header {
-      color: #ffca5b;
+      color: #0acc95;
     }
-    .p-content,
+    .p-body,
     .p-footer button {
-      background-color: #ffca5b;
+      background-color: #0acc95;
     }
   }
   &:nth-last-of-type(3) .content {
     .p-header {
-      color: #4de5d5;
+      color: #7460ee;
     }
-    .p-content,
+    .p-body,
     .p-footer button {
-      background-color: #4de5d5;
+      background-color: #7460ee;
     }
   }
 
   &:nth-last-of-type(4) .content {
     .p-header {
-      color: #6ab8f7;
+      color: #186dde;
     }
-    .p-content,
+    .p-body,
     .p-footer button {
-      background-color: #6ab8f7;
+      background-color: #186dde;
     }
   }
   .content {
@@ -211,10 +308,14 @@ header {
     border-radius: 5px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     text-align: left;
-
+    min-height: 215px;
+    display: inline-block;
+    width: 100%;
     .p-header {
       position: relative;
-      padding: 10px 10px 10px 40px;
+      padding: 0px 10px 0px 40px;
+      margin: 10px 0;
+      border-left: 2px solid;
       font-weight: 600;
       font-size: 18px;
       .material-icons {
@@ -227,7 +328,7 @@ header {
         padding: 10px;
         font-size: 15px;
         font-weight: bold;
-        small,  
+        small,
         small span {
           font-weight: 200;
           margin-left: 5px;
@@ -244,6 +345,9 @@ header {
         width: 100%;
         border-radius: 0 0 5px 5px;
         font-size: 14px;
+        color: #fff;
+        font-weight: bold;
+        letter-spacing: 1px;
       }
     }
     .ico {
@@ -288,65 +392,52 @@ header {
 }
 
 /*############################ BETS #######################*/
-.bets .title {
-  margin: 30px 0 15px;
-}
+
 .app-ativo-bet {
   .content {
     background-color: #fff;
-    padding: 10px;
+    padding: 20px;
     margin: 0;
     font-size: 14px;
     border-radius: 5px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-    .avatar {
-      .img {
-        background-color: #bebbf7;
-        border-radius: 5px 5px 0 0;
-        padding: 5px;
-        img {
-          border-radius: 5;
-          width: 100%;
-        }
-      }
-      button {
-        border: none;
-        background-color: #f7c990;
-        font-size: 14px;
-        color: #fff;
-        text-transform: lowercase;
+    text-align: left;
+    min-height: 400px;
+    .p-header {
+      small {
+        margin-left: 10px;
         font-size: 12px;
-        width: 100%;
-        padding: 10px 0;
-        border-radius: 0 0 5px 5px;
-      }
-    }
-    .info {
-      text-align: left;
-      h4 {
-        font-size: 22px;
-      }
-      h4,
-      h5,
-      p {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      h5 {
-        font-size: 20px;
-        margin-top: 10px;
-        small,
-        small span {
+        span {
           margin-left: 5px;
           font-size: 14px;
-          &.pos {
-            color: #1a985f;
-          }
-          &.neg {
-            color: #f00;
-          }
         }
+        &.pos {
+          color: #1a985f;
+        }
+        &.neg {
+          color: #f00;
+        }
+      }
+    }
+    .p-body {
+      height: 250px;
+    }
+    .p-footer {
+      .avatar {
+        width: 70px;
+        height: 70px;
+        background-size: cover;
+        background-position: 50%;
+        border: 2px solid #7460ee;
+        border-radius: 50%;
+        background-position: 50%;
+      }
+      p {
+        margin: 0;
+        font-weight: bold;
+      }
+      span {
+        font-size: 12px;
       }
     }
   }

@@ -13,54 +13,21 @@ import logo from "../assets/logo.png";
 
 import DataService from "../services/data.service";
 import { useEffect, useState } from "react";
+import authService from "../services/auth.service";
 
-const ativoReview = [];
+const ativoReview = [
+  { loading: true },
+  { loading: true },
+  { loading: true },
+  { loading: true },
+];
+const apostaSemana = [
+  { loading: true },
+  { loading: true },
+  { loading: true }
+];
 const HomePage = () => {
   
-
-  let apostaSemana = [
-    {
-      id: 1,
-      actualValue: 11153.0,
-      actualPercentage: 15.5,
-      user: {
-        id: 1,
-        avatar:
-          "https://cdn.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.webp",
-        name: "Roberto J.",
-        lastName: "Silva",
-        company: "Rj Investimentos",
-        role: "Assessor de Investimetnos",
-      },
-    },
-    {
-      id: 1,
-      actualValue: 11153.0,
-      actualPercentage: 15.5,
-      user: {
-        id: 1,
-        avatar: "https://www.pngarts.com/files/6/User-Avatar-in-Suit-PNG.png",
-        name: "Felipe L.",
-        lastName: "Gomes",
-        company: "Banco Modal",
-        role: "Analista de Sistemas",
-      },
-    },
-    {
-      id: 1,
-      actualValue: 11153.0,
-      actualPercentage: 15.5,
-      user: {
-        id: 1,
-        avatar:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnMDee2vjFJEskStXPWwXv8y3uQdL9kJsa_A&usqp=CAU",
-        name: "Maria da S.",
-        lastName: "Sauro",
-        company: "XP Investimentos",
-        role: "Analista de Produtos",
-      },
-    },
-  ];
 
   let columns = [
     {
@@ -173,15 +140,19 @@ const HomePage = () => {
   ];
   const dataService = new DataService();
   const [reviewData, setReview] = useState(ativoReview);
-  
-  
+  const [betData, setBet] = useState(apostaSemana);
+
   useEffect(() => {
-    dataService.get("reviews").then((res) => {
-      console.log('reviews');
+    dataService.get("reviews/get_top_reviews").then((res) => {
       getTickers(res.data);
     });
   }, [setReview]);
-  
+
+  useEffect(() => {
+    dataService.get("betotw/last").then((res) => {
+      setBet(res.data);
+    });
+  }, [setBet]);
 
   function getTickers(review) {
     var tickers = "";
@@ -197,21 +168,22 @@ const HomePage = () => {
         review[data]["data"] = [];
         for (var i in res) {
           if (review[data].cod == i.split(".SA")[0]) {
-            for(var y in res[i]){
+            for (var y in res[i]) {
               review[data]["data"].push(res[i][y]);
             }
-            
+
             var lastBOnePos =
               res[i][Object.keys(res[i])[Object.keys(res[i]).length - 2]];
             var lastPos =
               res[i][Object.keys(res[i])[Object.keys(res[i]).length - 1]];
-              review[data]["value"] = lastPos.toFixed(2);
-              review[data]["percentage"] =
-              ((lastPos/lastBOnePos) * 100 - 100).toFixed(2);
+            review[data]["value"] = lastPos.toFixed(2);
+            review[data]["percentage"] = (
+              (lastPos / lastBOnePos) * 100 -
+              100
+            ).toFixed(2);
           }
         }
       }
-      console.log(review);
       setReview(review);
     });
   }
@@ -224,37 +196,36 @@ const HomePage = () => {
         <h4 className="title">Reviews populares</h4>
 
         <div className="row">
-          {
-            reviewData.map((review, i) => {
-              return (
-                <AtivoReview
-                  cod={review.cod}
-                  name={review.name}
-                  title={review.title}
-                  value={review.value}
-                  percentage={review.percentage}
-                  data={review.data}
-                />
-              );
-            })}
+          {reviewData.map((review, i) => {
+            return (
+              <AtivoReview
+                cod={review.cod}
+                name={review.name}
+                title={review.title}
+                value={review.value}
+                percentage={review.percentage}
+                data={review.data}
+                loading={review.loading}
+              />
+            );
+          })}
         </div>
       </section>
       <section className="bets">
         <h4 className="title">Apostas da Semana</h4>
 
         <div className="row">
-          {apostaSemana.map((bet, i) => {
+          {betData.map((bet, i) => {
             return (
               <ApostasSemana
-                userid={bet.user.id}
-                betid={bet.id}
-                name={bet.user.name}
-                lastName={bet.user.lastName}
-                avatar={bet.user.avatar}
-                role={bet.user.role}
-                company={bet.user.company}
-                value={bet.actualValue}
-                percentage={bet.actualPercentage}
+                data={bet.data}
+                info={bet.info}
+                unitValue={bet.unitValue}
+                totalValue={bet.totalValue}
+                initialTotalValue={bet.initialTotalValue}
+                actualTotalValue={bet.actualTotalValue}
+                percentage={bet.percentage}
+                loading={bet.loading}
               />
             );
           })}
