@@ -1,13 +1,12 @@
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import { useState, useEffect } from "react";
 import "@material/react-material-icon/index.scss";
 import "./style.scss";
+import { ToastContainer } from 'react-toastify';
 
 //import Layout from "./layout/Layout";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import MainNavigation from "./layout/MainNavigation";
-import AuthService from "./services/auth.service";
 import AccountPage from "./pages/AccountPage";
 
 function App() {
@@ -15,9 +14,10 @@ function App() {
     <div className="App">
       <div
         className={`container ${
-          window.location.pathname == "/login" ? "login" : ""
+          window.location.pathname === "/login" ? "login" : ""
         }`}
-      >
+      > 
+      <ToastContainer />
         <Router>
           <MainNavigation />
           <div className="layout-container">
@@ -26,6 +26,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/login" element={<AuthPage />} />
               <Route path="/my-account" element={<AccountPage />} />
+              <Route path="/account/:id" element={<AccountPage />} />
             </Routes>
           </div>
         </Router>

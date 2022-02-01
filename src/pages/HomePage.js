@@ -143,15 +143,19 @@ const HomePage = () => {
   const [betData, setBet] = useState(apostaSemana);
 
   useEffect(() => {
+    let controller = new AbortController();
     dataService.get("reviews/get_top_reviews").then((res) => {
       getTickers(res.data);
     });
+    return () => controller?.abort();
   }, [setReview]);
 
   useEffect(() => {
+    let controller = new AbortController();
     dataService.get("betotw/last").then((res) => {
       setBet(res.data);
     });
+    return () => controller?.abort();
   }, [setBet]);
 
   function getTickers(review) {
@@ -218,6 +222,7 @@ const HomePage = () => {
           {betData.map((bet, i) => {
             return (
               <ApostasSemana
+                size={4}
                 data={bet.data}
                 info={bet.info}
                 unitValue={bet.unitValue}

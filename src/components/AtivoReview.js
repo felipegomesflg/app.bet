@@ -7,7 +7,7 @@ function AtivoReview(props) {
     <div className={`app-ativo-review col-sm-3 ${props.loading?'loading':''}`}>
       <div className="content">
         <div className="loading">
-          <img src={loading}></img>
+          <img src={loading} alt="Loading..."></img>
         </div>
         <div className="p-header" alt={props.title}>
           <span className="material-icons ">assignment</span> {props.cod}
@@ -20,7 +20,7 @@ function AtivoReview(props) {
         </div>
         <div className="p-footer ">
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-8">
               <small>valor atual</small> <br />
               R$ {props.value}
               <small className={props.percentage > 0 ? "pos" : "neg"}>

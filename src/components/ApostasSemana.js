@@ -18,8 +18,7 @@ function ApostasSemana(props) {
     });
   }
 
-  console.log(series);
-  console.log(props.totalValue);
+  
   state = {
     series: props.totalValue,
     options: {
@@ -54,15 +53,15 @@ function ApostasSemana(props) {
   };
 
   return (
-    <div className={`app-ativo-bet col-sm-4 ${props.loading ? "loading" : ""}`}>
+    <div className={`app-ativo-bet mb-2 col-sm-${props.size} ${props.loading ? "loading" : ""}`}>
       <div className="content ">
         <div className="loading">
-          <img src={loading}></img>
+          <img src={loading} alt="Loading..."></img>
         </div>
         {!props.loading && (
           <div>
             <div className="p-header row">
-              <div className="col-sm-8">
+              <div className="col-sm-10">
                 <h4>
                   R$ {props.actualTotalValue}
                   <small className={props.percentage > 0 ? "pos" : "neg"}>
@@ -71,7 +70,7 @@ function ApostasSemana(props) {
                   </small>
                 </h4>
               </div>
-              <div className="col-sm-4 align-right"></div>
+              <div className="col-sm-2 align-right"></div>
             </div>
             <div className="p-body">
               {state && (

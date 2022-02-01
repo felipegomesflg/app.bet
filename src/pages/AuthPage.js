@@ -73,7 +73,7 @@ const AuthPage = () => {
     <section className="auth">
       <div className="overlay">
         <div>
-          <img src={logo} className="logo" />
+          <img src={logo} className="logo" alt="Logo" />
           <h5>{isLogin ? "Login" : "Cadastro"}</h5>
           {isLogin ? (
             <form onSubmit={handleLogin}>

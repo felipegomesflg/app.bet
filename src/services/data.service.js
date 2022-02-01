@@ -15,7 +15,7 @@ class DataService {
     url = joinURL(this.domain, url);
     const storage = JSON.parse(localStorage.getItem("user"));
     if (storage) {
-      headers.Authorization += storage.access_token;
+      headers.Authorization = "Bearer "+storage.access_token;
     }
     const options = {
       headers,
@@ -38,6 +38,11 @@ class DataService {
       url = `${url}/${id}`;
     }
     return this.request(url, method).then((res) => res.json());
+  }
+
+  put(url,data){
+    const method = "PUT";
+    return this.request(url, method, data).then((res) => res.json());
   }
 
   delete(url, id) {

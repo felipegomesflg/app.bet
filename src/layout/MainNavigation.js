@@ -2,25 +2,28 @@ import logoIco from "../assets/logo-ico.png";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Search from "../components/Search";
-import AuthService from "../services/auth.service";
+
+import globalService from "../services/global.service";
 import authService from "../services/auth.service";
 import noUser from '../assets/no-user.png';
 
 
 const MainNavigation = () => {
-  const [currentUser, setCurrentUser] = useState(undefined);
+  
+  const [, setCurrentUser] = useState();
   const location = useLocation();
   
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
+    const user = authService.getCurrentUser();
     if (user) {
-      setCurrentUser(user);
+      globalService.currentUser = user;
+      setCurrentUser({});
     }
   }, []);
   return (
     <div>
-      {(currentUser ||
+      {(globalService.currentUser ||
         location.pathname === "/" ||
         location.pathname === "/home") && (
         <div>
@@ -30,17 +33,17 @@ const MainNavigation = () => {
             </div>
             <div className="sidenav-inner">
               <div className="sidenav-item">
-                {currentUser ? (
+                {globalService.currentUser ? (
                   <div className="user-avatar">
                     <div className="avatar-content">
                       <span
                         style={{
                           backgroundImage:
-                            `url(${currentUser.avatar})`
+                            `url(${globalService.currentUser.avatar})`
                         }}
                       ></span>
                       <Link className="" to="/my-account">
-                        <p >{currentUser.first_name} {currentUser.last_name}</p>
+                        <p >{globalService.currentUser.first_name} {globalService.currentUser.last_name}</p>
                       </Link>
                     </div>
                     <div>
