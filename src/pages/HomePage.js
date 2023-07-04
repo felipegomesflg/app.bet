@@ -144,8 +144,8 @@ const HomePage = () => {
 
   useEffect(() => {
     let controller = new AbortController();
-    dataService.get("reviews/get_top_reviews").then((res) => {
-      getTickers(res.data);
+    dataService.get("reviews/top").then((res) => {
+      setReview(res.data);
     });
     return () => controller?.abort();
   }, [setReview]);
@@ -203,12 +203,11 @@ const HomePage = () => {
           {reviewData.map((review, i) => {
             return (
               <AtivoReview
-                cod={review.cod}
-                name={review.name}
-                title={review.title}
-                value={review.value}
-                percentage={review.percentage}
-                data={review.data}
+                cod={review.info ? review.info.Review.cod : ''}
+                title={review.info ? review.info.Review.title : ''}
+                value={review.info ? review.values[review.values.length-1] : ''}
+                percentage={review.info ? parseFloat(review.values[review.values.length-1]*100/review.values[review.values.length-2]-100).toFixed(2) : ''}
+                data={review.info ? review.values : ''}
                 loading={review.loading}
               />
             );
